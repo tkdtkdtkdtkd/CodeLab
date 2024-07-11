@@ -1,0 +1,33 @@
+/*
+
+Problem Statement: You are given an array of ‘N’ integers. You need to find the length of the longest sequence which contains the consecutive elements.
+
+Sort array -> Loop through elements -> if(arr[i] == last_element + 1) -> count++ -> else -> reset count to 1 -> update last_element to arr[i] -> longest = max(longest, count)
+
+*/
+
+int longestSuccessiveElements(vector<int>& a) {
+    int n = a.size();
+    if (n == 0) return 0; // If the array is empty, return 0
+
+    // Sort the array
+    sort(a.begin(), a.end());
+    int lastSmaller = INT_MIN; // Variable to store the last smaller element in the sequence
+    int cnt = 0; // Counter for the current sequence length
+    int longest = 1; // Variable to store the length of the longest sequence
+
+    // Find the longest sequence
+    for (int i = 0; i < n; i++) {
+        if (a[i] - 1 == lastSmaller) {
+            // a[i] is the next element of the current sequence
+            cnt += 1;
+            lastSmaller = a[i];
+        } else if (a[i] != lastSmaller) {
+            // If a[i] is not part of the current sequence and not a duplicate
+            cnt = 1;
+            lastSmaller = a[i];
+        }
+        longest = max(longest, cnt); // Update the longest sequence length
+    }
+    return longest;
+}
