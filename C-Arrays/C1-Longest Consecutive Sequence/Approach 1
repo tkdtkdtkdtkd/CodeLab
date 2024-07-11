@@ -1,0 +1,45 @@
+/*
+
+Problem Statement: You are given an array of ‘N’ integers. You need to find the length of the longest sequence which contains the consecutive elements.
+
+array -> for each element (x): count = 1 -> while (x + 1 in array) (check for x+1 using linear search): x++ -> count++ -> longest = max(longest, count);
+
+*/
+
+#include <vector>
+#include <algorithm>
+
+class Solution {
+public:
+    // Helper function to perform linear search
+    bool linearS(int x, const std::vector<int>& nums) {
+        for (auto it : nums) {
+            if (it == x) return true;
+        }
+        return false;
+    }
+
+    // Function to find the length of the longest consecutive sequence
+    int longestConsecutive(std::vector<int>& nums) {
+        int n = nums.size();
+        if (n == 0) return 0;
+
+        int longest = 0; // Variable to store the length of the longest consecutive sequence
+
+        for (auto it : nums) {
+            int x = it;
+            int count = 1; // Current sequence length starts at 1 (including the current element)
+
+            // Check for consecutive elements
+            while (linearS(x + 1, nums) == true) {
+                x++;
+                count++;
+            }
+
+            // Update the longest sequence length found so far
+            longest = std::max(longest, count);
+        }
+
+        return longest;
+    }
+};
