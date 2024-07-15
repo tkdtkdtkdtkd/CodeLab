@@ -1,0 +1,30 @@
+/*
+
+Problem Statement: Given a matrix, your task is to rotate the matrix 90 degrees clockwise in place.
+
+To transpose -> Outer loop (0 -> n-1) for rows -> Inner loop (i+1 -> n-1) for columns (swap [i][j] & [j][i]) -> Run a loop for rows and reverse each row
+
+*/
+
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        // Get the size of the matrix
+        int n = matrix.size();
+
+        // Transpose the matrix by swapping elements across the diagonal
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+
+        // Reverse each row to get the final rotated matrix
+        for (int i = 0; i < n; i++) {
+            reverse(matrix[i].begin(), matrix[i].end());
+        }
+
+        // No need to return anything as we are modifying the matrix in place
+        return;
+    }
+};
