@@ -1,0 +1,34 @@
+/*
+
+Problem Statement: Given an array of integers and an integer k, return the total number of subarrays whose sum equals k.
+
+A subarray is a contiguous non-empty sequence of elements within an array.
+
+-> Initialize hashmap with (0,1) -> Initialize count and preSum to 0 -> For each num in nums: update preSum -> Add to count the value from hashmap for key (preSum - k) -> Increment the value in hashmap for key preSum -> Return count
+
+*/
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        // Map to store the cumulative sum frequencies
+        map<int, int> mpp;
+        // Initialize with 0 sum having one frequency
+        mpp[0] = 1;
+
+        // Variables to store the count of subarrays and the cumulative sum
+        int count = 0, preSum = 0;
+
+        // Iterate through each number in the array
+        for(auto num : nums) {
+            // Update the cumulative sum
+            preSum += num;
+            // If (preSum - k) is found in the map, it means there is a subarray ending at the current index with sum k
+            count += mpp[preSum - k];
+            // Increment the frequency of the cumulative sum in the map
+            mpp[preSum]++;
+        }
+        // Return the total count of subarrays with sum equal to k
+        return count;
+    }
+};
