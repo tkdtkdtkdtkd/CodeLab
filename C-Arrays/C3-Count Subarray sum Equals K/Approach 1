@@ -1,0 +1,31 @@
+/*
+
+Problem Statement: Given an array of integers and an integer k, return the total number of subarrays whose sum equals k. A subarray is a contiguous non-empty sequence of elements within an array.
+
+for (i = 0; i < arr_length; i++) for (sum = 0, j = i; j < arr_length; j++, sum += arr[j]) if (sum == k) count++;
+
+*/
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int count=0; // Initialize a counter to store the number of subarrays found
+        int n=nums.size(); // Get the size of the input array
+        
+        // Outer loop: iterate through each element of the array as a potential starting point of subarrays
+        for(int i=0;i<n;i++){
+            int sum=0; // Initialize sum to store the sum of elements in the current subarray
+            
+            // Inner loop: consider all subarrays starting from index i to end of array
+            for(int j=i;j<n;j++){
+                sum+=nums[j]; // Add the current element to the sum of the subarray
+                
+                // If the sum of the current subarray equals k, increment the count
+                if(sum==k) count++;
+            }
+        }
+        
+        // Return the total count of subarrays whose sum equals k
+        return count;
+    }
+};
