@@ -1,8 +1,6 @@
 /*
 
-Problem Statement: Given an array of integers and an integer k, return the total number of subarrays whose sum equals k.
-
-A subarray is a contiguous non-empty sequence of elements within an array.
+Problem Statement: Given an array of integers and an integer k, return the total number of subarrays whose sum equals k. A subarray is a contiguous non-empty sequence of elements within an array.
 
 -> Initialize hashmap with (0,1) -> Initialize count and preSum to 0 -> For each num in nums: update preSum -> Add to count the value from hashmap for key (preSum - k) -> Increment the value in hashmap for key preSum -> Return count
 
