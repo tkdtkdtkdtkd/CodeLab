@@ -1,0 +1,34 @@
+/*
+
+Problem Statement: Given an array of N integers. Find the elements that appear more than N/3 times in the array. If no such element exists, return an empty vector.
+
+Initialize empty answer vector -> For each element in array -> If answer is empty or first element of answer != current element -> Count occurrences of current element in array -> If count > n/3, append current element to answer -> If len(answer) == 2, break -> Return answer
+
+*/
+
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        // Initialize the answer vector
+        int n = nums.size();
+        vector<int> ans;
+
+        // Iterate through each element in the array
+        for (int i = 0; i < n; i++) {
+            // Check if the answer vector is empty or the current element is different from the first element in the answer
+            if (ans.size() == 0 || ans[0] != nums[i]) {
+                // Count the occurrences of the current element
+                int count = 0;
+                for (int j = 0; j < n; j++) if (nums[i] == nums[j]) count++;
+
+                // If the count is greater than n/3, add the current element to the answer vector
+                if (count > n / 3) ans.push_back(nums[i]);
+            }
+
+            // If the answer vector has two elements, break the loop as there can be at most two majority elements
+            if (ans.size() == 2) break;
+        }
+
+        return ans;
+    }
+};
