@@ -1,0 +1,30 @@
+/*
+
+Problem Statement: Given an array of N integers. Find the elements that appear more than N/3 times in the array. If no such element exists, return an empty vector.
+
+iterate through array elements -> update mpp[element]++ -> if mpp[element] > n/3 -> push element to answer array -> if len(answer) == 2 -> break 
+
+*/
+
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        // Create a map to store element frequencies
+        map<int, int> mpp;
+        int n = nums.size();
+        vector<int> ans; // Stores the majority elements
+
+        for (auto num : nums) {
+            // Increment the frequency of the current number
+            mpp[num]++;
+
+            // If the frequency becomes more than n/3, it's a majority element
+            if (mpp[num] == n / 3 + 1) ans.push_back(num);
+
+            // If we've found two majority elements, break the loop
+            if (ans.size() == 2) break;
+        }
+
+        return ans;
+    }
+};
