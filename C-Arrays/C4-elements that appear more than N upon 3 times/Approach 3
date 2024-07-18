@@ -1,0 +1,59 @@
+/*
+
+Problem Statement: Given an array of N integers. Find the elements that appear more than N/3 times in the array. If no such element exists, return an empty vector.
+
+Initialize e1, e2, c1, c2 to 0 -> Iterate: increment c1 if current = e1, else increment c2 if current = e2, else if c1 is 0, set e1 to current, c1 to 1, else if c2 is 0, set e2 to current, c2 to 1, else decrement c1, c2 -> Iterate: return e1 if c1 > n/3, else return e2 if c2 > n/3
+
+*/
+
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        // Initialize counters and potential candidates for majority elements
+        int cnt1 = 0, cnt2 = 0, ele1, ele2;
+        int n = nums.size();
+
+        // First pass: find potential candidates for the majority elements
+        for(auto num : nums) {
+            if(cnt1 == 0 && ele2 != num) {
+                // Assign num to ele1 if cnt1 is zero and num is not equal to ele2
+                cnt1 = 1;
+                ele1 = num;
+            }
+            else if(cnt2 == 0 && ele1 != num) {
+                // Assign num to ele2 if cnt2 is zero and num is not equal to ele1
+                cnt2 = 1;
+                ele2 = num;
+            }
+            else if(num == ele1) {
+                // Increment cnt1 if num is equal to ele1
+                cnt1++;
+            }
+            else if(num == ele2) {
+                // Increment cnt2 if num is equal to ele2
+                cnt2++;
+            }
+            else {
+                // Decrement both counters if num is not equal to either ele1 or ele2
+                cnt1--;
+                cnt2--;
+            }
+        }
+
+        // Second pass: verify if the candidates are indeed majority elements
+        vector<int> ans;
+        cnt1 = 0;
+        cnt2 = 0;
+        for(auto num : nums) {
+            if(num == ele1) cnt1++;  // Count occurrences of ele1
+            if(num == ele2) cnt2++;  // Count occurrences of ele2
+        }
+
+        // Add ele1 to the result if it appears more than n/3 times
+        if(cnt1 > n / 3) ans.push_back(ele1);
+        // Add ele2 to the result if it appears more than n/3 times and it's different from ele1
+        if(cnt2 > n / 3 && ele1 != ele2) ans.push_back(ele2);
+
+        return ans;  // Return the list of majority elements
+    }
+};
