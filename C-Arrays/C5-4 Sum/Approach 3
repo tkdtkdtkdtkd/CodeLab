@@ -1,0 +1,50 @@
+/*
+
+Problem Statement: Given an array of N integers, your task is to find unique quads that add up to give a target value. In short, you need to return an array of all the unique quadruplets [arr[a], arr[b], arr[c], arr[d]] such that their sum is equal to a given target.
+
+Sort array -> Loop i from 0 to n-1 -> Check for duplicates -> Loop j from i+1 to n-1 -> Check for duplicates -> Initialize k=j+1, l=n-1 -> While k<l: Check sum -> If sum>target: l-- -> Else if sum<target: k++ -> Else: Add quadruplet, skip duplicates, increment k, decrement l -> Return list of quadruplets
+
+*/
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        vector<vector<int>> ans;
+        
+        // Sort the array to facilitate two-pointer approach
+        sort(nums.begin(), nums.end());
+        
+        // Outer loop for first element
+        for (int i = 0; i < n; i++) {
+            // Skip duplicates for the first element
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            
+            // Inner loop for second element
+            for (int j = i + 1; j < n; j++) {
+                // Skip duplicates for the second element
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+                
+                // Two-pointer approach for remaining elements
+                int k = j + 1, l = n - 1;
+                while (k < l) {
+                    long long sum = nums[i] + nums[j] + nums[k] + nums[l];
+                    
+                    // Found a quadruplet
+                    if (sum == target) {
+                        ans.push_back({nums[i], nums[j], nums[k], nums[l]});
+                        
+                        // Skip duplicates for k and l
+                        k++; l--;
+                        while (k < l && nums[k] == nums[k - 1]) k++;
+                        while (k < l && nums[l] == nums[l + 1]) l--;
+                    } 
+                    // Adjust pointers based on sum
+                    else if (sum < target) k++;
+                    else l--;
+                }
+            }
+        }
+        return ans;
+    }
+};
