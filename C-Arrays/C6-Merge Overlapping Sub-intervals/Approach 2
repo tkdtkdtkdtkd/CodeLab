@@ -1,0 +1,36 @@
+/*
+
+Problem Statement: Given an array of intervals, merge all the overlapping intervals and return an array of non-overlapping intervals.
+
+Sort intervals -> Initialize answer list -> Insert first interval into answer -> Iterate intervals -> If current interval overlaps last in answer: Update last interval's end -> Else: Insert current interval into answer -> Return answer list 
+
+*/
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        // Get the number of intervals
+        int n = intervals.size();
+        
+        // Sort intervals based on start time
+        sort(intervals.begin(), intervals.end());
+        
+        // Vector to store merged intervals
+        vector<vector<int>> ans;
+        
+        // Iterate through all intervals
+        for (int i = 0; i < n; i++) {
+            // If the answer list is empty or the current interval doesn't overlap with the last merged interval
+            if (ans.empty() || intervals[i][0] > ans.back()[1]) {
+                // Add the current interval as a new merged interval
+                ans.push_back(intervals[i]);
+            } else {
+                // Merge the current interval with the last merged interval
+                ans.back()[1] = max(ans.back()[1], intervals[i][1]);
+            }
+        }
+        
+        // Return the merged intervals
+        return ans;
+    }
+};
