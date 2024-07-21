@@ -1,0 +1,54 @@
+/*
+
+Problem Statement: You are given a read-only array of N integers with values also in the range [1, N] both inclusive. Each integer appears exactly once except A which appears twice and B which is missing. The task is to find the repeating and missing numbers A and B where A repeats twice and B is missing.
+
+Assume the repeating number to be X and the missing number to be Y -> Find the XOR of (X^Y) by XORing all array elements with XOR of numbers from 1 to N -> Find the first set bit from right in (X^Y) -> Group elements based on the bit at that position into two groups -> XOR elements of each group to get X and Y -> Determine which is repeating and which is missing by traversing the array.
+
+*/
+
+vector<int> findTwoElement(vector<int> arr, int n) {
+    // Function to find two repeating and missing elements in an array
+
+    // Initialize XOR result with 0
+    int xr = 0;
+
+    // Calculate XOR of all array elements and their corresponding indices
+    for (int i = 0; i < n; i++) {
+        xr = xr ^ arr[i];
+        xr = xr ^ (i + 1);
+    }
+
+    // Find the rightmost set bit in the XOR result
+    int bitno = 0;
+    while (1) {
+        if ((xr & (1 << bitno)) != 0)
+            break;
+        else
+            bitno++;
+    }
+
+    // Divide elements into two sets based on the found bit
+    int zero = 0, one = 0;
+    for (int i = 0; i < n; i++) {
+        if ((arr[i] & (1 << bitno)) != 0)
+            one = one ^ arr[i];
+        else
+            zero = zero ^ arr[i];
+        if (((i + 1) & (1 << bitno)) != 0)
+            one = one ^ (i + 1);
+        else
+            zero = zero ^ (i + 1);
+    }
+
+    // Count the occurrences of one of the elements
+    int count = 0;
+    for (auto ele : arr)
+        if (ele == zero)
+            count++;
+
+    // Determine the repeating and missing elements based on the count
+    if (count == 2)
+        return {zero, one};  // zero is repeating, one is missing
+    else
+        return {one, zero};   // one is repeating, zero is missing
+}
