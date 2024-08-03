@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Quick sort
+
+int partition(vector<int>& arr, int low, int high) {
+    int pivot = arr[low];  // Choose the first element as the pivot
+    int i = low, j = high;
+
+    while (i < j) {
+        while (arr[i] <= pivot && i < high) i++;  // Find the first element greater than pivot
+        while (arr[j] > pivot && j > low) j--;   // Find the first element less than or equal to pivot
+        if (i < j) swap(arr[i], arr[j]);
+    }
+    swap(arr[low], arr[j]);  // Swap pivot with the element at j
+    return j;  // Return the index of the pivot
+}
+
+void quickSort(vector<int>& arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);  // Partition the array around the pivot
+        quickSort(arr, low, pi - 1);  // Sort the left subarray
+        quickSort(arr, pi + 1, high);  // Sort the right subarray
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (auto& x : v) cin >> x;
+
+    quickSort(v, 0, n - 1);
+
+    for (auto x : v) cout << x << " ";
+    return 0;
+}
