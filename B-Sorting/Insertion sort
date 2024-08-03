@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using pii = pair<int, int>;
+using ll = long long;
+
+// Bubble sort implementation
+
+int main() {
+    ios::sync_with_stdio(false); // Fast input/output
+    cin.tie(0);
+    cout.tie(0);
+
+    int n;
+    cin >> n; // Read the number of elements
+
+    vector<int> v(n);
+    for (auto &x : v) cin >> x; // Read the elements into the vector
+
+    // Bubble sort algorithm
+    for (int i = 1; i < n; i++) { // Outer loop iterates over the unsorted part
+        int j = i;
+        while (j > 0 && v[j - 1] > v[j]) { // Inner loop compares adjacent elements and swaps if needed
+            swap(v[j], v[j - 1]);
+            j--;
+        }
+    }
+
+    for (auto x : v) cout << x << " "; // Print the sorted elements
+}
