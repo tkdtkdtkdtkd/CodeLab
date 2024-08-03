@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using pii = pair<int, int>;
+using ll = long long;
+
+// Bubble sort implementation
+
+int main() {
+    ios::sync_with_stdio(false); // Fast input/output
+    cin.tie(0);
+    cout.tie(0);
+
+    int n;
+    cin >> n; // Input the size of the array
+
+    vector<int> v(n);
+    for (auto &x : v) cin >> x; // Input the array elements
+
+    // Outer loop: Iterate through the array from the end
+    for (int i = n - 1; i >= 0; i--) {
+        bool swapped = false; // Flag to check if any swaps occurred in this pass
+
+        // Inner loop: Compare adjacent elements and swap if necessary
+        for (int j = 0; j < i; j++) {
+            if (v[j] > v[j + 1]) {
+                swap(v[j], v[j + 1]); // Swap elements
+                swapped = true; // Indicate a swap occurred
+            }
+        }
+
+        // If no swaps occurred in this pass, the array is sorted
+        if (!swapped) break;
+    }
+
+    // Print the sorted array
+    for (auto x : v) cout << x << " ";
+}
