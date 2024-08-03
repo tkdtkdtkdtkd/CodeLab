@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Define commonly used types for better readability
+using pii = pair<int, int>;
+using ll = long long;
+
+// Function to perform selection sort on a vector of integers
+int main() {
+    // Fast input/output for efficiency
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int n;
+    cin >> n; // Read the number of elements
+
+    // Create a vector to store the input elements
+    vector<int> v(n);
+    for (auto &x : v) cin >> x; // Read the elements into the vector
+
+    // Selection sort algorithm
+    for (int i = 0; i < n; i++) {
+        // Find the index of the minimum element in the unsorted part
+        int min_index = i;
+        for (int j = i + 1; j < n; j++) {
+            if (v[j] < v[min_index]) min_index = j;
+        }
+
+        // Swap the found minimum element with the first element
+        swap(v[min_index], v[i]);
+    }
+
+    // Print the sorted elements
+    for (auto x : v) cout << x << " ";
+}
