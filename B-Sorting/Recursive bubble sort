@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using pii = pair<int, int>;
+using ll = long long;
+
+// Recursive bubble sort function
+void rec_bubbleSort(vector<int> &arr, int n) {
+    // Base case: if the array has only one element, it's already sorted
+    if (n == 1)
+        return;
+
+    // Flag to check if any swaps occurred in this pass
+    bool swapped = false;
+
+    // Traverse the array from the beginning to n-1
+    for (int i = 0; i <= n - 1; i++) {
+        // If the current element is greater than the next element, swap them
+        if (arr[i] > arr[i + 1]) {
+            swap(arr[i], arr[i + 1]);
+            swapped = true;
+        }
+    }
+
+    // If no swaps occurred in this pass, the array is sorted
+    if (!swapped)
+        return;
+
+    // Recursively sort the subarray excluding the last element
+    rec_bubbleSort(arr, n - 1);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int n;
+    cin >> n;  // Read the number of elements
+
+    vector<int> v(n);
+    for (auto &x : v)
+        cin >> x;  // Read the elements
+
+    rec_bubbleSort(v, n);  // Sort the array using recursive bubble sort
+
+    for (auto x : v)
+        cout << x << " ";  // Print the sorted array
+}
