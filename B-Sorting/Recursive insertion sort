@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using pii = pair<int, int>;
+using ll = long long;
+
+// Recursive insertion sort
+// Function to perform insertion sort recursively
+void rec_insertionSort(vector<int> &arr, int n, int i) {
+    // Base case: If we've reached the end of the array, return
+    if (i == n) return;
+
+    // Insert the current element (arr[i]) into its correct position in the sorted subarray
+    int j = i;
+    while (j > 0 && arr[j - 1] > arr[j]) {
+        swap(arr[j - 1], arr[j]);
+        j--;
+    }
+
+    // Recursively sort the remaining unsorted part of the array
+    rec_insertionSort(arr, n, i + 1);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int n;
+    cin >> n;
+
+    vector<int> v(n);
+    for (auto &x : v) cin >> x;
+
+    // Sort the vector using recursive insertion sort
+    rec_insertionSort(v, n, 1);
+
+    // Print the sorted vector
+    for (auto x : v) cout << x << " ";
+}
