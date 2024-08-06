@@ -1,0 +1,97 @@
+/*
+
+## Problem Statement
+
+### Given:
+* An array `a` of `n` positive integers.
+
+### Operation:
+* Choose any pair of indices `(i, j)` such that `a[i]` and `a[j]` have different parities.
+* Replace the smaller value with the sum of both values.
+
+### Goal:
+* Find the minimum number of operations required to make all elements in the array have the same parity.
+
+### Input:
+* First line: Integer `t` (number of test cases, 1 ≤ t ≤ 10^4)
+* For each test case:
+  * First line: Integer `n` (length of array, 1 ≤ n ≤ 2 * 10^5)
+  * Second line: `n` integers `a1, a2, ..., an` (1 ≤ ai ≤ 10^9)
+
+### Output:
+* For each test case, output a single integer: the minimum number of operations required.
+
+### Constraints:
+* Sum of `n` over all test cases does not exceed 2 * 10^5.
+
+Approach: 
+store odd and even elements in separate vectors -> if either of them is 0, cout 0 -> else -> sort both arrays -> iterate through even array -> if current even element < max odd, add to max odd -> else -> answer = even array size + 1 -> else -> answer = even array size
+
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// Type aliases for readability
+using pii = pair<int, int>;
+using ll = long long;
+using vi = vector<int>;
+
+int main() {
+    // Fast input/output for performance
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int t;
+    cin >> t; // Number of test cases
+
+    while (t--) {
+        int n;
+        cin >> n; // Number of elements
+
+        // Separate even and odd numbers into vectors
+        vector<ll> even, odd;
+        for (int i = 0; i < n; i++) {
+            ll x;
+            cin >> x;
+            if (x % 2 == 0) {
+                even.push_back(x);
+            } else {
+                odd.push_back(x);
+            }
+        }
+
+        // Handle cases where there are no even or odd numbers
+        if (even.empty() || odd.empty()) {
+            cout << 0 << endl;
+            continue;
+        }
+
+        // Sort even and odd numbers
+        sort(even.begin(), even.end());
+        sort(odd.begin(), odd.end());
+
+        // Find the maximum odd number
+        ll max_odd = odd[odd.size() - 1];
+
+        // Check if all even numbers can be added to max_odd
+        bool flag = true;
+        for (auto ele : even) {
+            if (ele < max_odd) {
+                max_odd += ele; // Add even number to max_odd
+            } else {
+                flag = false; // If an even number is greater than max_odd, flag is set to false
+                break;
+            }
+        }
+
+        // Output the result based on the flag
+        if (flag) {
+            cout << even.size() << endl; // All even numbers can be added
+        } else {
+            cout << even.size() + 1 << endl; // One additional group needed
+        }
+    }
+    return 0;
+}
